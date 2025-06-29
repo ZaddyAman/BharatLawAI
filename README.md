@@ -52,20 +52,14 @@ Legal information in India is vast, fragmented, and hard to access without exper
 ---
 
 ## 🧩 Project Structure
-Indian Legal Assistant/
-├── app/
-│ ├── streamlit_app.py # Main UI entry point
-│ └── tabs/
-│ ├── chat.py # Chat interface (RAG)
-│ ├── stats.py # Monitoring & Feedback
-├── data/ # Acts, feedback logs, parsed data
-├── ingest/
-│ └── load_acts.py # Ingests Zenodo + CivicTech data
-├── rag/
-│ ├── embed_store.py # Embeds + stores chunks in Chroma
-│ └── query_engine.py # RAG query handler
-├── requirements.txt
-└── README.md
+BharatLawAI/
+├── app/            ✅ contains `streamlit_app.py` and `tabs/`
+├── chroma_db/      ✅ vector DB from Chroma
+├── data/           ✅ stores parsed data, feedback logs, etc.
+├── ingest/         ✅ ingestion pipeline
+├── rag/            ✅ contains `query_engine.py`
+├── requirements.txt✅ includes all Python dependencies
+
 
 
 
