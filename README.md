@@ -11,9 +11,10 @@ BharatLawAI is an AI-powered legal assistant that helps users query Indian legal
 ---
 
 ## 🚀 Demo
+![Screenshot 2025-06-29 145407](https://github.com/user-attachments/assets/504e2655-1d1e-4df5-ba56-45805c972119)
+![Screenshot 2025-06-29 145441](https://github.com/user-attachments/assets/61d81fa6-85b3-46af-9fcf-b1264601b6ec)
 
-![Demo Preview](Screenshot 2025-06-29 145407.png)  
-> *(Live app link coming soon if deployed)*
+
 
 ---
 
