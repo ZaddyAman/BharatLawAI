@@ -51,4 +51,94 @@ Legal information in India is vast, fragmented, and hard to access without exper
 ---
 
 ## 🧩 Project Structure
+Indian Legal Assistant/
+├── app/
+│ ├── streamlit_app.py # Main UI entry point
+│ └── tabs/
+│ ├── chat.py # Chat interface (RAG)
+│ ├── stats.py # Monitoring & Feedback
+├── data/ # Acts, feedback logs, parsed data
+├── ingest/
+│ └── load_acts.py # Ingests Zenodo + CivicTech data
+├── rag/
+│ ├── embed_store.py # Embeds + stores chunks in Chroma
+│ └── query_engine.py # RAG query handler
+├── requirements.txt
+└── README.md
+
+
+
+---
+
+## 🧪 RAG Pipeline
+
+1. ✅ **Ingestion**: Legal acts are parsed and chunked
+2. ✅ **Embedding**: SentenceTransformer encodes chunks
+3. ✅ **Storage**: Chunks + embeddings stored in ChromaDB
+4. ✅ **Query**: Questions embedded → top-k chunks retrieved
+5. ✅ **LLM Prompting**: Prompt built → passed to LLaMA3 via Ollama
+6. ✅ **Fallback**: If no chunks found → fallback to raw LLM
+7. ✅ **Monitoring**: Answers saved, feedback logged
+
+---
+
+## 🧾 Sample Questions
+
+- *What is the punishment under Section 302?*
+- *Explain cruelty under Section 498A of IPC.*
+- *What does the Hindu Marriage Act say about divorce?*
+- *Which section talks about motor vehicle insurance?*
+
+---
+
+## 🧪 Evaluation
+
+| Component         | Evaluation Done? | Details |
+|------------------|------------------|---------|
+| Problem Defined  | ✅ Yes | Described above |
+| RAG Flow         | ✅ Yes | Vector DB + LLM |
+| Retrieval Eval   | ✅ Yes | Top-k (varied), manual inspection |
+| Prompt Eval      | ✅ Yes | Tested prompting styles |
+| UI               | ✅ Yes | Streamlit multi-tab interface |
+| Ingestion        | ✅ Yes | JSON ingestion, loaders |
+| Monitoring       | ✅ Yes | Thumbs up/down, logs |
+| Containerization | ✅ Optional | Dockerfile WIP |
+
+---
+
+## 📈 Monitoring Example
+
+- ✅ User feedback stored in `data/feedback_log.jsonl`
+- ✅ Stats tab visualizes total queries, good/bad feedback
+- ❌ Advanced dashboards (Grafana) not yet added
+
+---
+
+## 🔐 Limitations & Next Steps
+
+| Limitation | Plan |
+|------------|------|
+| Limited Sections | Add NLP section-linking + uploadable chunks |
+| No OCR/Image Acts | Add OCR + visual document support |
+| No advanced dashboards | Add Grafana/Kibana |
+| No multilingual support | Add support for Hindi queries |
+
+---
+
+## 🚀 Setup Instructions
+
+```bash
+git clone https://github.com/your-username/BharatLawAI.git
+cd BharatLawAI
+pip install -r requirements.txt
+
+# Start LLM (e.g., Ollama)
+ollama run llama3
+
+# Embed and store sections
+python rag/embed_store.py
+
+# Launch app
+streamlit run app/streamlit_app.py
+
 
