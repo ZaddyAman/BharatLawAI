@@ -1,8 +1,10 @@
 streamlit
-chromadb
+chromadb==1.0.13
 sentence-transformers==2.2.2
 tqdm
 ollama
 numpy
 scikit-learn
 pandas
+jsonschema
+python-dotenv
