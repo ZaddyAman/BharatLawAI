@@ -185,19 +185,4 @@ BharatLawAI is for educational and informational use only. It does **not** provi
 
 ---
 
-## 📄 License
-
-This project is licensed under the MIT License. See the `LICENSE` file.
-
-```
-
----
-
-Let me know if you also want:
-- A pinned GitHub issue template for bugs or features
-- A `docs/` folder with architectural diagrams
-- GitHub Pages or Streamlit Cloud deployment instructions
-
-Happy shipping!
-```
 
