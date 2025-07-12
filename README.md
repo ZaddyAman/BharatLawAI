@@ -14,15 +14,30 @@
 
 Click the thumbnail above to watch how BharatLawAI works — from asking legal questions to retrieving grounded answers from Indian acts using local AI.
 
+
+## 💡 Why BharatLawAI?
+
+Legal knowledge in India is vast, fragmented, and not easily accessible to most people. This project solves that by enabling:
+
+* Natural language search for legal sections
+* Real-time AI-generated answers grounded in law
+* Easy browsing of Indian statutes (IPC, CrPC, etc.)
+* Logged user queries and feedback for continuous improvement
+
+* 
+
 ---
 
-## 🧠 Problem Statement
+## 🧠 Core Features
 
-Legal knowledge in India is vast, scattered, and hard to navigate. BharatLawAI aims to:
+✅ AI Q\&A Chatbot powered by local LLM
+✅ Secure user authentication and chat history
+✅ Stop response generation mid-way
+✅ Section Explorer with search + pagination
+✅ Source attribution (legal DB vs LLM guess)
+✅ Fully responsive UI
+✅ Feedback capture with logging
 
-- Let users ask legal questions in natural language
-- Return context-aware, grounded responses using real acts
-- Support feedback and iterative fine-tuning
 
 ---
 
@@ -37,15 +52,17 @@ Legal knowledge in India is vast, scattered, and hard to navigate. BharatLawAI a
 
 ## 🧩 Project Variants
 
-### Full-Stack Version (React + FastAPI)
+## ⚙️ Tech Stack
 
-| Layer | Stack |
-|-------|-------|
-| Frontend | React 18, Vite, Tailwind CSS |
-| Backend | FastAPI, Uvicorn |
-| RAG | ChromaDB + Sentence-Transformers |
-| LLM | Ollama (LLaMA3) |
-| Interface | Responsive multi-page SPA |
+| Layer        | Tools                                               |
+| ------------ | --------------------------------------------------- |
+| Frontend     | React, TypeScript, Vite, Tailwind CSS, Lucide, GSAP |
+| Backend      | FastAPI, Uvicorn, Pydantic, SQLAlchemy, Passlib     |
+| Embeddings   | Sentence-Transformers (BAAI/bge-small-en-v1.5)      |
+| Vector DB    | ChromaDB (local persistent client)                  |
+| LLM          | Groq API / Ollama + LLaMA3                          |
+| Data Sources | Indian Bare Acts (IPC, CrPC, CPC, MVA, HMA, etc.)   |
+
 
 ### Streamlit Version (Lightweight RAG Prototype)
 
@@ -77,15 +94,25 @@ BharatLawAI/
 
 
 
-## 🧪 RAG Pipeline
+## 🧪 How It Works (RAG Flow)
 
-1. **Ingestion**: Acts parsed & chunked
-2. **Embedding**: Chunks → vectors via SentenceTransformer
-3. **Storage**: Stored in ChromaDB
-4. **Querying**: Top-k chunks retrieved per user query
-5. **Prompting**: Retrieved chunks + query → passed to Ollama (LLaMA3)
-6. **Fallback**: If retrieval fails → LLM-only response
-7. **Monitoring**: Logs, feedback saved
+1. **Ingest**: Parse and chunk legal sections
+2. **Embed**: Convert sections into vectors using Sentence-Transformers
+3. **Store**: Store vectors in ChromaDB
+4. **Query**: Embed user question → retrieve top-k relevant sections
+5. **Prompt**: Merge query + context and send to LLM (Groq/Ollama)
+6. **Fallback**: If no context → fallback to raw LLM response
+7. **Log**: Save queries, responses, and feedback
+
+---
+
+## 🔐 User Workflow
+
+* **Sign Up / Log In**
+* **Ask legal questions via chat**
+* **Browse laws in the Section Explorer**
+* **View or continue past chats**
+* **Give feedback on responses**
 
 ---
 
@@ -122,51 +149,49 @@ BharatLawAI/
 
 
 
-## 🐳 Setup Instructions
+## 📦 Setup Guide
 
 ### Prerequisites
 
 * Python 3.9+
-* Node.js (for full-stack version)
-* Ollama (`https://ollama.ai/`)
+* Node.js (LTS)
+* Ollama (for local inference) or Groq API key
 
+---
 
-Option 1 – Streamlit Version
-
-git clone https://github.com/your-username/BharatLawAI.git
-cd BharatLawAI
-pip install -r requirements.txt
-
-# Start LLM
-ollama run llama3
-
-# Embed data
-python rag/embed_store.py
-
-# Launch UI
-streamlit run app/streamlit_app.py
-
-
-### Option 2 – Full-Stack (React + FastAPI)
-
-#### Backend
+### Backend Setup (FastAPI)
 
 ```bash
 cd backend
 pip install -r requirements.txt
+
+# Create .env file
+echo 'SECRET_KEY=your-secret-key' > .env
+echo 'GROQ_API_KEY=your-groq-api-key' >> .env
+
+# Start the backend
 uvicorn main:app --reload --port 8000
 ```
 
-#### Frontend
+---
+
+### Frontend Setup (React)
 
 ```bash
-cd ../bharatlaw-frontend
+cd bharatlaw-frontend
 npm install
 cp .env.example .env
+# Set VITE_API_URL=http://localhost:8000
 npm run dev
 ```
 
 ---
+
+### Ingest Legal Data (if needed)
+
+```bash
+python ingest/load_acts.py
+```
 
 ## 🤝 Contributing
 
