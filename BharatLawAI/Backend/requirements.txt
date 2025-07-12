@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+pydantic
+chromadb
+sentence-transformers
+ollama  # or openai, depending on your model
