@@ -1,139 +1,208 @@
-# ⚖️ BharatLawAI
 
-> A Retrieval-Augmented Generation (RAG) based AI Legal Assistant for Indian Law (1838–2020)
+````markdown
+# ⚖️ BharatLawAI – AI Legal Assistant for Indian Law
 
-![Streamlit](https://img.shields.io/badge/Built%20with-Streamlit-orange)
+> A Retrieval-Augmented Generation (RAG)-powered assistant that lets users query Indian laws (IPC, CrPC, CPC, etc.) using natural language. Powered by local LLMs and vector search for accurate, explainable answers.
+
+![Streamlit](https://img.shields.io/badge/Interface-Streamlit%20%7C%20React-blueviolet)
 ![RAG](https://img.shields.io/badge/RAG-Enabled-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
-BharatLawAI is an AI-powered legal assistant that helps users query Indian legal acts (like IPC, CrPC, CPC, etc.) using natural language. It leverages RAG with a vector database + local LLM to provide accurate, explainable answers grounded in law.
-
 ---
 
-## 🚀 Demo
-![Screenshot 2025-06-29 145407](https://github.com/user-attachments/assets/504e2655-1d1e-4df5-ba56-45805c972119)
-![Screenshot 2025-06-29 145441](https://github.com/user-attachments/assets/61d81fa6-85b3-46af-9fcf-b1264601b6ec)
+## 🎥 Demo Video
 
+[![Watch the demo](https://img.youtube.com/vi/LFJNSSbH3hc/maxresdefault.jpg)](https://youtu.be/LFJNSSbH3hc)
 
+Click the thumbnail above to watch how BharatLawAI works — from asking legal questions to retrieving grounded answers from Indian acts using local AI.
 
 ---
 
 ## 🧠 Problem Statement
 
-Legal information in India is vast, fragmented, and hard to access without expertise. This project solves that by:
+Legal knowledge in India is vast, scattered, and hard to navigate. BharatLawAI aims to:
 
-- Making laws searchable via natural language questions
-- Supporting fast and accurate legal lookups via RAG
-- Allowing feedback, monitoring, and fine-tuning over time
+- Let users ask legal questions in natural language
+- Return context-aware, grounded responses using real acts
+- Support feedback and iterative fine-tuning
 
 ---
 
 ## 📚 Datasets Used
 
-| Source | Format | Acts Included |
-|--------|--------|----------------|
+| Source | Format | Content |
+|--------|--------|---------|
 | [Zenodo Legal Corpus (1838–2020)](https://zenodo.org/record/4277318) | JSONL | Acts, Sections |
-| [IndiaLaw Bare Acts (CivicTech)](https://github.com/civictech-india/indian-laws-data) | JSON/SQLite | IPC, CrPC, CPC, MVA, HMA, IDA, IEA, NIA |
+| [IndiaLaw – CivicTech](https://github.com/civictech-india/indian-laws-data) | JSON / SQLite | IPC, CrPC, CPC, MVA, HMA, etc. |
 
 ---
 
-## 🛠️ Tech Stack
+## 🧩 Project Variants
 
-| Layer | Tools |
+### Full-Stack Version (React + FastAPI)
+
+| Layer | Stack |
 |-------|-------|
-| **Interface** | `Streamlit` |
-| **LLM** | `Ollama` (LLaMA3) |
-| **Embedding Model** | `BAAI/bge-small-en-v1.5` |
-| **Vector DB** | `ChromaDB` |
-| **Ingestion** | Python scripts (custom loaders) |
-| **Monitoring** | Streamlit metrics, feedback logging |
-| **Containerization** | Docker-ready (optional) |
+| Frontend | React 18, Vite, Tailwind CSS |
+| Backend | FastAPI, Uvicorn |
+| RAG | ChromaDB + Sentence-Transformers |
+| LLM | Ollama (LLaMA3) |
+| Interface | Responsive multi-page SPA |
+
+### Streamlit Version (Lightweight RAG Prototype)
+
+| Layer | Stack |
+|-------|-------|
+| UI | Streamlit |
+| RAG | ChromaDB + BAAI/bge-small-en-v1.5 |
+| LLM | Ollama (LLaMA3) |
+| Features | Tabs, Query logs, Feedback capture |
 
 ---
 
-## 🧩 Project Structure
+## 📁 Project Structure
+
+```bash
 BharatLawAI/
-├── app/            ✅ contains `streamlit_app.py` and `tabs/`
-├── chroma_db/      ✅ vector DB from Chroma
-├── data/           ✅ stores parsed data, feedback logs, etc.
-├── ingest/         ✅ ingestion pipeline
-├── rag/            ✅ contains `query_engine.py`
-├── requirements.txt✅ includes all Python dependencies
-
-
-
+├── app/                 # Streamlit app and tabs
+├── backend/             # FastAPI backend logic
+│   ├── api/             # Routes
+│   ├── rag/             # Embedding, query, fallback
+│   ├── tools/           # Search utils, fallback LLMs
+│   └── main.py
+├── bharatlaw-frontend/  # React frontend app
+├── chroma_db/           # Vector DB storage
+├── data/                # Acts, feedback logs
+├── ingest/              # Data ingestion scripts
+├── requirements.txt     # Python dependencies
+````
 
 ---
 
 ## 🧪 RAG Pipeline
 
-1. ✅ **Ingestion**: Legal acts are parsed and chunked
-2. ✅ **Embedding**: SentenceTransformer encodes chunks
-3. ✅ **Storage**: Chunks + embeddings stored in ChromaDB
-4. ✅ **Query**: Questions embedded → top-k chunks retrieved
-5. ✅ **LLM Prompting**: Prompt built → passed to LLaMA3 via Ollama
-6. ✅ **Fallback**: If no chunks found → fallback to raw LLM
-7. ✅ **Monitoring**: Answers saved, feedback logged
+1. **Ingestion**: Acts parsed & chunked
+2. **Embedding**: Chunks → vectors via SentenceTransformer
+3. **Storage**: Stored in ChromaDB
+4. **Querying**: Top-k chunks retrieved per user query
+5. **Prompting**: Retrieved chunks + query → passed to Ollama (LLaMA3)
+6. **Fallback**: If retrieval fails → LLM-only response
+7. **Monitoring**: Logs, feedback saved
 
 ---
 
 ## 🧾 Sample Questions
 
-- *What is the punishment under Section 302?*
-- *Explain cruelty under Section 498A of IPC.*
-- *What does the Hindu Marriage Act say about divorce?*
-- *Which section talks about motor vehicle insurance?*
+* What is the punishment under Section 302 of IPC?
+* What does Section 498A say about cruelty?
+* Explain divorce under Hindu Marriage Act.
+* Which section covers motor vehicle insurance?
 
 ---
 
-## 🧪 Evaluation
+## 📈 Monitoring & Logging
 
-| Component         | Evaluation Done? | Details |
-|------------------|------------------|---------|
-| Problem Defined  | ✅ Yes | Described above |
-| RAG Flow         | ✅ Yes | Vector DB + LLM |
-| Retrieval Eval   | ✅ Yes | Top-k (varied), manual inspection |
-| Prompt Eval      | ✅ Yes | Tested prompting styles |
-| UI               | ✅ Yes | Streamlit multi-tab interface |
-| Ingestion        | ✅ Yes | JSON ingestion, loaders |
-| Monitoring       | ✅ Yes | Thumbs up/down, logs |
-| Containerization | ✅ Optional | Dockerfile WIP |
+| Feature                      | Status                                               |
+| ---------------------------- | ---------------------------------------------------- |
+| Query Feedback               | ✅ Thumbs up/down stored in `data/feedback_log.jsonl` |
+| Metrics Tab                  | ✅ View total queries and responses                   |
+| External Dashboard (Grafana) | ❌ Planned                                            |
 
 ---
 
-## 📈 Monitoring Example
+## 🛠️ Tech Stack
 
-- ✅ User feedback stored in `data/feedback_log.jsonl`
-- ✅ Stats tab visualizes total queries, good/bad feedback
-- ❌ Advanced dashboards (Grafana) not yet added
-
----
-
-## 🔐 Limitations & Next Steps
-
-| Limitation | Plan |
-|------------|------|
-| Limited Sections | Add NLP section-linking + uploadable chunks |
-| No OCR/Image Acts | Add OCR + visual document support |
-| No advanced dashboards | Add Grafana/Kibana |
-| No multilingual support | Add support for Hindi queries |
+| Layer            | Tools                  |
+| ---------------- | ---------------------- |
+| Interface        | Streamlit / React      |
+| LLM              | Ollama (LLaMA3)        |
+| Embedding        | BAAI/bge-small-en-v1.5 |
+| Vector DB        | ChromaDB               |
+| Backend          | FastAPI                |
+| Styling          | Tailwind CSS           |
+| Containerization | Docker (WIP)           |
 
 ---
 
-## 🚀 Setup Instructions
+## 🐳 Setup Instructions
+
+### Prerequisites
+
+* Python 3.9+
+* Node.js (for full-stack version)
+* Ollama (`https://ollama.ai/`)
+
+---
+
+### Option 1 – Streamlit Version
 
 ```bash
 git clone https://github.com/your-username/BharatLawAI.git
 cd BharatLawAI
 pip install -r requirements.txt
 
-# Start LLM (e.g., Ollama)
+# Start LLM
 ollama run llama3
 
-# Embed and store sections
+# Embed data
 python rag/embed_store.py
 
-# Launch app
+# Launch UI
 streamlit run app/streamlit_app.py
+```
 
+---
 
+### Option 2 – Full-Stack (React + FastAPI)
+
+#### Backend
+
+```bash
+cd backend
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+```
+
+#### Frontend
+
+```bash
+cd ../bharatlaw-frontend
+npm install
+cp .env.example .env
+npm run dev
+```
+
+---
+
+## 🤝 Contributing
+
+Pull requests welcome!
+
+1. Fork this repo
+2. Create a branch: `git checkout -b feature/my-feature`
+3. Commit your changes
+4. Open a PR
+
+---
+
+## ⚠️ Disclaimer
+
+BharatLawAI is for educational and informational use only. It does **not** provide legal advice. Always consult a licensed lawyer for legal matters.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See the `LICENSE` file.
+
+```
+
+---
+
+Let me know if you also want:
+- A pinned GitHub issue template for bugs or features
+- A `docs/` folder with architectural diagrams
+- GitHub Pages or Streamlit Cloud deployment instructions
+
+Happy shipping!
+```
